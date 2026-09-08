@@ -1,0 +1,16 @@
+{
+  "name": "in-memory-crud-api",
+  "version": "1.0.0",
+  "description": "In-memory CRUD API for Products with layered architecture, custom middleware, validation, and centralized error handling.",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "uuid": "^9.0.1"
+  }
+}

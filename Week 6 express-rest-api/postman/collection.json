@@ -1,0 +1,218 @@
+{
+  "info": {
+    "name": "In-Memory CRUD API",
+    "_postman_id": "b6f2a1d0-6e3f-4a2f-9b1a-in-memory-crud",
+    "description": "Full CRUD test suite for the Products API: success and failure cases for every endpoint, plus middleware behaviors (validation, 404, rate limiting).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api" },
+    { "key": "productId", "value": "" },
+    { "key": "existingId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "pm.test('success true', () => pm.response.json().success === true);"
+      ]}}]
+    },
+    {
+      "name": "01 - List Products (success)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/products" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "const body = pm.response.json();",
+        "pm.test('has data array', () => Array.isArray(body.data));",
+        "if (body.data.length) pm.collectionVariables.set('existingId', body.data[0].id);"
+      ]}}]
+    },
+    {
+      "name": "02 - List Products with filters (success)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/products?category=electronics&minPrice=10&maxPrice=100" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));"
+      ]}}]
+    },
+    {
+      "name": "03 - List Products bad query (FAIL 400)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/products?minPrice=notanumber" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 400', () => pm.response.to.have.status(400));",
+        "pm.test('has validation details', () => pm.response.json().error.details.length > 0);"
+      ]}}]
+    },
+    {
+      "name": "04 - Create Product (success)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/products",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"USB-C Hub\",\n  \"price\": 29.99,\n  \"quantity\": 40,\n  \"category\": \"electronics\"\n}" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 201', () => pm.response.to.have.status(201));",
+        "const body = pm.response.json();",
+        "pm.test('returns created product with id', () => !!body.data.id);",
+        "pm.collectionVariables.set('productId', body.data.id);"
+      ]}}]
+    },
+    {
+      "name": "05 - Create Product missing fields (FAIL 400)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/products",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"A\" }" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 400', () => pm.response.to.have.status(400));",
+        "pm.test('lists missing fields', () => pm.response.json().error.details.length >= 2);"
+      ]}}]
+    },
+    {
+      "name": "06 - Create Product negative price (FAIL 400)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/products",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"Bad Item\", \"price\": -5, \"quantity\": 10 }" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 400', () => pm.response.to.have.status(400));"
+      ]}}]
+    },
+    {
+      "name": "07 - Create Product duplicate name (FAIL 409)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/products",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"USB-C Hub\", \"price\": 9.99, \"quantity\": 5 }" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 409', () => pm.response.to.have.status(409));"
+      ]}}]
+    },
+    {
+      "name": "08 - Create Product malformed JSON (FAIL 400)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/products",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"Broken\", \"price\": }" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 400', () => pm.response.to.have.status(400));",
+        "pm.test('malformed JSON message', () => pm.response.json().error.message.includes('Malformed'));"
+      ]}}]
+    },
+    {
+      "name": "09 - Get Product by id (success)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/products/{{productId}}" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "pm.test('id matches', () => pm.response.json().data.id === pm.collectionVariables.get('productId'));"
+      ]}}]
+    },
+    {
+      "name": "10 - Get Product not found (FAIL 404)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/products/11111111-1111-4111-8111-111111111111" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 404', () => pm.response.to.have.status(404));"
+      ]}}]
+    },
+    {
+      "name": "11 - Get Product invalid id format (FAIL 400)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/products/not-a-uuid" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 400', () => pm.response.to.have.status(400));"
+      ]}}]
+    },
+    {
+      "name": "12 - Replace Product PUT (success)",
+      "request": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/products/{{productId}}",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"USB-C Hub Pro\",\n  \"price\": 34.99,\n  \"quantity\": 35,\n  \"category\": \"electronics\"\n}" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "pm.test('name updated', () => pm.response.json().data.name === 'USB-C Hub Pro');"
+      ]}}]
+    },
+    {
+      "name": "13 - Replace Product missing fields (FAIL 400)",
+      "request": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/products/{{productId}}",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"Incomplete\" }" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 400', () => pm.response.to.have.status(400));"
+      ]}}]
+    },
+    {
+      "name": "14 - Update Product PATCH (success)",
+      "request": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/products/{{productId}}",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"quantity\": 100 }" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "pm.test('quantity updated', () => pm.response.json().data.quantity === 100);"
+      ]}}]
+    },
+    {
+      "name": "15 - Update Product empty body (FAIL 400)",
+      "request": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/products/{{productId}}",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{}" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 400', () => pm.response.to.have.status(400));"
+      ]}}]
+    },
+    {
+      "name": "16 - Update Product not found (FAIL 404)",
+      "request": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/products/11111111-1111-4111-8111-111111111111",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"quantity\": 5 }" }
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 404', () => pm.response.to.have.status(404));"
+      ]}}]
+    },
+    {
+      "name": "17 - Delete Product (success 204)",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/products/{{productId}}" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 204', () => pm.response.to.have.status(204));"
+      ]}}]
+    },
+    {
+      "name": "18 - Delete Product already deleted (FAIL 404)",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/products/{{productId}}" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 404', () => pm.response.to.have.status(404));"
+      ]}}]
+    },
+    {
+      "name": "19 - Unknown route (FAIL 404)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/unknown-route" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 404', () => pm.response.to.have.status(404));"
+      ]}}]
+    }
+  ]
+}
