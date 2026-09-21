@@ -1,0 +1,819 @@
+{
+  "info": {
+    "_postman_id": "d105ce2c-5f14-45e9-a0a8-e0390e87f7ad",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57153200",
+    "_collection_link": "https://go.postman.co/collection/57153200-d105ce2c-5f14-45e9-a0a8-e0390e87f7ad?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Event_Management",
+      "item": [
+        {
+          "name": "Register ORGANIZER",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Tauqir Hayat\",\n  \"email\": \"metauqs@gmail.com\",\n  \"password\": \"tauqs@1122\",\n  \"role\": \"ORGANIZER\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register USER",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test\",\n  \"email\": \"test@gmail.com\",\n  \"password\": \"password123\",\n  \"role\": \"USER\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@gmail.com\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as ORGANIZER",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"metauqs@gmail.com\",\n  \"password\": \"tauqs@1122\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "http://localhost:3000/api/auth/me",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{supabase_service_role_api_key_15l7}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create an EVENT",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{supabase_service_role_api_key_12py}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Automation Event",
+                  "type": "text",
+                  "uuid": "b9100233-5065-408a-8e21-2ebca5cb8298"
+                },
+                {
+                  "key": "description",
+                  "value": "Practical Implementaion",
+                  "type": "text",
+                  "uuid": "0c569d4d-7d59-40b6-97dc-fa3f9380c127"
+                },
+                {
+                  "key": "date",
+                  "value": "2026-10-20",
+                  "type": "text",
+                  "uuid": "5c6ca116-3281-4a16-8450-2a0a5653d20e"
+                },
+                {
+                  "key": "location",
+                  "value": "Johar Town",
+                  "type": "text",
+                  "uuid": "a4d36050-0aaf-4053-9c34-09cd3e72b57a"
+                },
+                {
+                  "key": "capacity",
+                  "value": "30",
+                  "type": "text",
+                  "uuid": "7b071d68-d24a-4d58-8c22-4776a14e3796"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "8a088a97-0b6a-4df7-ba5d-fe4cce8ab939",
+                  "src": "/Users/mrtauqs/Documents/WallPapers/wallpaperflare.com_wallpaper (1) copy 7.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all events",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{supabase_service_role_api_key_15l7}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "type": "text",
+                  "uuid": "d0bdcb4e-34b4-48ce-bf22-afe0b5dc2f0b",
+                  "value": "Ai Workshop"
+                },
+                {
+                  "key": "description",
+                  "type": "text",
+                  "uuid": "9d2d807f-0db5-4a0e-8a65-91b4c146a941",
+                  "value": "A practical Use of AI"
+                },
+                {
+                  "key": "date",
+                  "type": "text",
+                  "uuid": "e40791da-1239-4709-a788-e5d5c6b9ba51",
+                  "value": "2026-11-16"
+                },
+                {
+                  "key": "location",
+                  "type": "text",
+                  "uuid": "5473b6f5-5ebe-4072-be1d-36fa0249a686",
+                  "value": "Lahore"
+                },
+                {
+                  "key": "capacity",
+                  "type": "text",
+                  "uuid": "74a3f5ba-cb4a-4312-ba47-5e1d8f4dc30a",
+                  "value": "50"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "bf2c69b7-c39c-42d0-8744-5b6c9099b256",
+                  "src": "/Users/mrtauqs/Documents/WallPapers/2112121.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test pagination",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test search",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/events?page=1&limit=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test date filtering",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/events?date=2026-10-16",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2026-10-16"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get one event By ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/events/6aa8f7ba77bc3cef8838f174",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events",
+                "6aa8f7ba77bc3cef8838f174"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update the event",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{supabase_service_role_api_key_12py}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "date",
+                  "type": "text",
+                  "uuid": "effbd9ed-351b-4195-8f4c-79a74a29afeb",
+                  "value": "2026-10-21"
+                },
+                {
+                  "key": "capacity",
+                  "type": "text",
+                  "uuid": "983e006c-cd88-41cc-908a-11f209886273",
+                  "value": "75"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/events/6aa8f7ba77bc3cef8838f174",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events",
+                "6aa8f7ba77bc3cef8838f174"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test role protection",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_04r7}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Login Copy",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@gmail.com\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Booking & Test Dublication",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0cdk}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/events/6aa8f62977bc3cef8838f16c/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events",
+                "6aa8f62977bc3cef8838f16c",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Check USER's bookings",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{supabase_service_role_api_key_0cdk}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/bookings/my",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "bookings",
+                "my"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter user's bookings",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0cdk}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/bookings/my?status=PENDING",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "bookings",
+                "my"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Organizer views booking requests",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{supabase_service_role_api_key_0e19}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/events/6aa8f62977bc3cef8838f16c/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "events",
+                "6aa8f62977bc3cef8838f16c",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Accept booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0mti}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/bookings/6aa9073c4dd1d985ec9f3e94/accept",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "bookings",
+                "6aa9073c4dd1d985ec9f3e94",
+                "accept"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test cancel booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_secret_0mjy}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/bookings/6aa9073c4dd1d985ec9f3e94/cancel",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "bookings",
+                "6aa9073c4dd1d985ec9f3e94",
+                "cancel"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_02aj",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_02aj",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_15l7",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_12py",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_04r7",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0cdk",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0cdk",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0e19",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0mti",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_0mjy",
+      "secret": true
+    }
+  ]
+}
