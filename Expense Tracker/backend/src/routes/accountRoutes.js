@@ -1,0 +1,16 @@
+const router = require('express').Router();
+const c = require('../controllers/accountController');
+const auth = require('../middleware/authMiddleware');
+const { requireObjectId, requirePositiveAmount } = require('../middleware/validateMiddleware');
+router.use(auth);
+router.get('/', c.list);
+router.post('/', c.create);
+router.post('/transfer', c.transfer);
+router.post('/reconcile-all', c.reconcileAll);
+router.post('/:id/reconcile', requireObjectId('id'), c.reconcile);
+router.post('/:id/deposit', requireObjectId('id'), requirePositiveAmount, c.deposit);
+router.post('/:id/withdraw', requireObjectId('id'), requirePositiveAmount, c.withdraw);
+router.get('/:id', requireObjectId('id'), c.get);
+router.put('/:id', requireObjectId('id'), c.update);
+router.delete('/:id', requireObjectId('id'), c.remove);
+module.exports = router;

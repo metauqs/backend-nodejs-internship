@@ -6,6 +6,7 @@ node_modules/
 # Environment variables & secrets
 .env
 .env.*
+.env*.local
 !.env.example
 
 # macOS metadata
@@ -19,13 +20,21 @@ Icon
 
 ._*
 
-# Logs
+# Logs & temp
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.tmp
 
 # Build outputs
 dist/
 build/
+
+# Local agent & IDE configuration
+.agent/
+.agents/
+.gemini/
+.gsd/
+

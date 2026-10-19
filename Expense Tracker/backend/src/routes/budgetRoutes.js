@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const c = require('../controllers/budgetController');
+const auth = require('../middleware/authMiddleware');
+router.use(auth);
+router.get('/', c.list);
+router.post('/', c.upsert);
+router.put('/', c.upsert);
+router.get('/:monthKey', c.get);
+router.post('/:monthKey', c.upsert);
+router.put('/:monthKey', c.upsert);
+module.exports = router;

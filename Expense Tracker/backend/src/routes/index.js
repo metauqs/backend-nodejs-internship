@@ -1,0 +1,10 @@
+const router = require('express').Router();
+router.use('/auth', require('./authRoutes'));
+router.use('/transactions', require('./transactionRoutes'));
+router.use('/categories', require('./categoryRoutes'));
+router.use('/dashboard', require('./dashboardRoutes'));
+router.use('/accounts', require('./accountRoutes'));
+router.use('/khata', require('./khataRoutes'));
+router.use('/budgets', require('./budgetRoutes'));
+router.use('/reports', require('./reportRoutes'));
+module.exports = router;

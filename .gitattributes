@@ -1,0 +1,2 @@
+# Mark package lockfiles as generated to keep GitHub commit diffs clean
+*package-lock.json linguist-generated=true

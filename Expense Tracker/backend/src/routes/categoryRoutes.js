@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const c = require('../controllers/categoryController');
+const auth = require('../middleware/authMiddleware');
+const { requireObjectId } = require('../middleware/validateMiddleware');
+router.use(auth);
+router.get('/', c.list);
+router.post('/', c.create);
+router.put('/:id', requireObjectId('id'), c.update);
+router.delete('/:id', requireObjectId('id'), c.remove);
+module.exports = router;

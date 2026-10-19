@@ -1,0 +1,14 @@
+const router = require('express').Router();
+const c = require('../controllers/khataController');
+const auth = require('../middleware/authMiddleware');
+const { requireObjectId } = require('../middleware/validateMiddleware');
+router.use(auth);
+router.get('/', c.list);
+router.get('/summary', c.summary);
+router.post('/', c.create);
+router.post('/:id/payment', requireObjectId('id'), c.payment);
+router.post('/:id/payments', requireObjectId('id'), c.payment);
+router.get('/:id', requireObjectId('id'), c.get);
+router.put('/:id', requireObjectId('id'), c.update);
+router.delete('/:id', requireObjectId('id'), c.remove);
+module.exports = router;
